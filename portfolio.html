@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdul Rahman - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">AR</a>
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+        <div class="social-links">
+            <a href="https://github.com/abdulhku7" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/in/your-linkedin" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://instagram.com/your-instagram" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </nav>
+
+    <main class="portfolio-page">
+        <div class="container">
+            <h1 class="portfolio-title">My Work</h1>
+            <div class="portfolio-grid">
+                
+            </div>
+            <div class="stats-popup">
+                <div class="stats-content">
+                    <div class="stats-header">
+                        <h2>Stats</h2>
+                        <button class="close-stats" onclick="document.querySelector('.stats-popup').classList.remove('show')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <h3>Projects</h3>
+                            <p class="stat-value" id="projects-count">0</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Videos</h3>
+                            <p class="stat-value" id="videos-count">0</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Views</h3>
+                            <p class="stat-value" id="views-count">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="portfolio.js"></script>
+</body>
+</html>

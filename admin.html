@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Contact Form Submissions</title>
+    <style>
+        :root {
+            --background: #09090b;
+            --foreground: #fafafa;
+            --card: #18181b;
+            --border: #27272a;
+            --primary: #3b82f6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+        }
+
+        .submissions {
+            display: none;
+        }
+
+        .submission-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .submission-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--foreground);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .timestamp {
+            color: #666;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <p>View all contact form submissions</p>
+        </div>
+
+        <div class="login-form" id="loginForm">
+            <h2>Login</h2>
+            <input type="password" id="adminPassword" placeholder="Enter admin password">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div class="submissions" id="submissions"></div>
+    </div>
+
+    <script>
+        let adminPassword = '';
+
+        async function login() {
+            adminPassword = document.getElementById('adminPassword').value;
+            await fetchSubmissions();
+        }
+
+        async function fetchSubmissions() {
+            try {
+                const response = await fetch('/api/submissions', {
+                    headers: {
+                        'x-admin-password': adminPassword
+                    }
+                });
+
+                if (response.ok) {
+                    const submissions = await response.json();
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('submissions').style.display = 'block';
+                    displaySubmissions(submissions);
+                } else {
+                    alert('Invalid password');
+                }
+            } catch (error) {
+                console.error('Error fetching submissions:', error);
+                alert('Failed to fetch submissions');
+            }
+        }
+
+        function displaySubmissions(submissions) {
+            const container = document.getElementById('submissions');
+            container.innerHTML = '';
+
+            submissions.reverse().forEach(submission => {
+                const card = document.createElement('div');
+                card.className = 'submission-card';
+                
+                const date = new Date(submission.timestamp).toLocaleString();
+                
+                card.innerHTML = `
+                    <div class="submission-header">
+                        <h3>${submission.name}</h3>
+                        <span class="timestamp">${date}</span>
+                    </div>
+                    <p><strong>Email:</strong> ${submission.email}</p>
+                    <p><strong>Message:</strong> ${submission.message}</p>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
